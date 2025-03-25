@@ -66,40 +66,4 @@ public class CapacidadServiceImpl implements CapacidadService {
                 });
     }
 
-    @Override
-    public Flux<CapacidadDTO> listarCapacidades(int page, int size, String sortField, String sortDirection) {
-        // Obtener todas las capacidades y ordenarlas en memoria
-        return capacidadRepository.findAll()
-                .sort(getComparator(sortField, sortDirection))
-                .skip((long) page * size)
-                .take(size)
-                .flatMap(capacidad -> {
-                    // Para cada capacidad, obtener detalles de las tecnologías a partir de sus IDs
-                    List<Long> techIds = capacidad.getTecnologiaIds().stream().collect(Collectors.toList());
-                    return Flux.fromIterable(techIds)
-                            .flatMap(techId -> tecnologiaClient.getTecnologiaById(techId)
-                                    .map(tech -> new TecnologiaDTO(tech.getId(), tech.getNombre()))) // Solo id y nombre
-                            .collectList()
-                            .map(tecnologias -> new CapacidadDTO(
-                                    capacidad.getId(),
-                                    capacidad.getNombre(),
-                                    capacidad.getDescripcion(),
-                                    tecnologias
-                            ));
-                });
-    }
-
-    private Comparator<? super Capacidad> getComparator(String sortField, String sortDirection) {
-        Comparator<Capacidad> comparator;
-        if ("cantidad".equalsIgnoreCase(sortField)) {
-            comparator = Comparator.comparing(cap -> cap.getTecnologiaIds().size());
-        } else { // "nombre" o por defecto
-            comparator = Comparator.comparing(Capacidad::getNombre, String.CASE_INSENSITIVE_ORDER);
-        }
-        if ("desc".equalsIgnoreCase(sortDirection)) {
-            comparator = comparator.reversed();
-        }
-        return comparator;
-    }
-
 }

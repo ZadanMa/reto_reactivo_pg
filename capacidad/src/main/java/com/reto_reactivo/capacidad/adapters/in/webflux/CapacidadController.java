@@ -33,12 +33,4 @@ public class CapacidadController {
             @RequestBody Set<Long> nuevasTecnologias) {
         return capacidadService.agregarTecnologias(id, nuevasTecnologias);
     }
-    @GetMapping
-    public Flux<CapacidadDTO> listarCapacidades(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "nombre") String sortField,
-            @RequestParam(defaultValue = "asc") String sortDirection) {
-        return capacidadService.listarCapacidades(page, size, sortField, sortDirection);
-    }
 }
