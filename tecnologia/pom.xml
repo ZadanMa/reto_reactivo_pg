@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.reto_reactivo</groupId>
-    <artifactId>tecnologiua</artifactId>
+    <artifactId>tecnologia</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>tecnologiua</name>
     <description>tecnologiua</description>
