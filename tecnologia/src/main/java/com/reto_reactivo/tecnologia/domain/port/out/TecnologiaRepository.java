@@ -12,4 +12,6 @@ public interface TecnologiaRepository {
     Mono<Boolean> existsByNombre(String nombre);
     // Nuevo método para listar tecnologías con ordenación
     Flux<Tecnologia> findAllTecnologias(Sort sort);
+    // Nuevo método para buscar por ID
+    Mono<Tecnologia> findById(Long id);
 }

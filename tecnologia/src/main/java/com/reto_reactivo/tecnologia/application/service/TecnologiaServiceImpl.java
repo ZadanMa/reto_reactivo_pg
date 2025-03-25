@@ -40,4 +40,9 @@ public class TecnologiaServiceImpl implements TecnologiaService {
                 .skip((long) page * size)
                 .take(size);
     }
+
+    @Override
+    public Mono<Tecnologia> findById(Long id) {
+        return tecnologiaRepository.findById(id);
+    }
 }

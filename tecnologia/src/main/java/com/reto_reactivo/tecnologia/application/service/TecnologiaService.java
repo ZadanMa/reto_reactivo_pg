@@ -8,4 +8,6 @@ import reactor.core.publisher.Mono;
 public interface TecnologiaService {
     Mono<Tecnologia> registrarTecnologia(Tecnologia tecnologia);
     Flux<Tecnologia> listarTecnologias(int page, int size, String sortDirection);
+    // Nuevo método para buscar por ID
+    Mono<Tecnologia> findById(Long id);
 }

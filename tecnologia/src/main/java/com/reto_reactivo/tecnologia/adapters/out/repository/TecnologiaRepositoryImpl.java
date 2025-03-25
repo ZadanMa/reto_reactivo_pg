@@ -31,4 +31,9 @@ public class TecnologiaRepositoryImpl implements TecnologiaRepository {
     public Flux<Tecnologia> findAllTecnologias(Sort sort) {
         return reactiveRepository.findAll(sort);
     }
+
+    @Override
+    public Mono<Tecnologia> findById(Long id) {
+        return reactiveRepository.findById(id);
+    }
 }

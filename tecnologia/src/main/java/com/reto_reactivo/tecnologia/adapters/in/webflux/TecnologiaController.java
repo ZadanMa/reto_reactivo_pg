@@ -32,4 +32,9 @@ public class TecnologiaController {
             @RequestParam(defaultValue = "asc") String sortDirection) {
         return tecnologiaService.listarTecnologias(page, size, sortDirection);
     }
+    // Nuevo endpoint para buscar tecnología por ID
+    @GetMapping("/{id}")
+    public Mono<Tecnologia> findById(@PathVariable Long id) {
+        return tecnologiaService.findById(id);
+    }
 }
