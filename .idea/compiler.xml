@@ -2,25 +2,31 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eureka-server" />
+        <module name="tecnologia" />
         <module name="auth-service" />
-        <module name="tecnologiua" />
+        <module name="bootcamps" />
+        <module name="eureka-server" />
+        <module name="capacidad" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="tecnologia" target="17" />
+      <module name="bootcamp" target="17" />
+      <module name="bootcamp.main" target="17" />
+      <module name="bootcamp.test" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="auth-service" options="-parameters" />
+      <module name="auth-service" options="" />
+      <module name="bootcamps" options="" />
+      <module name="capacidad" options="" />
       <module name="eureka-server" options="-parameters" />
-      <module name="tecnologia" options="-parameters" />
-      <module name="tecnologiua" options="-parameters" />
+      <module name="tecnologia" options="" />
     </option>
   </component>
 </project>

@@ -1,0 +1,23 @@
+# src/main/resources/application.yml
+spring:
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/capacidad_db?sslMode=DISABLED&serverZoneId=UTC
+    username: root
+    password: admin
+  flyway:
+    enabled: false
+  application:
+    name: capacidad
+
+server:
+  port: 8081  # Si se ejecuta en un puerto diferente al de otros microservicios
+
+logging:
+  level:
+    root: INFO
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://admin:eureka-secret@localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
