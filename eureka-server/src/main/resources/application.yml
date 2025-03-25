@@ -1,0 +1,19 @@
+server:
+  port: 8761 # Puerto estándar de Eureka
+
+spring:
+  application:
+    name: eureka-server
+  security: # Seguridad básica opcional
+    user:
+      name: admin
+      password: eureka-secret
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false # No se registra a sí mismo
+    fetch-registry: false       # No necesita obtener registros
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
