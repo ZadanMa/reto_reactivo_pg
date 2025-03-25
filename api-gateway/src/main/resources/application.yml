@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: api-gateway
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/gateway_db?sslMode=DISABLED
+    username: root
+    password: admin
+  flyway:
+    enabled: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://admin:eureka-secret@localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+server:
+  port: 8083
+
+logging:
+  level:
+    root: INFO
+springdoc:
+  webjars:
+    enabled: false

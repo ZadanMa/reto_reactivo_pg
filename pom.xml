@@ -19,6 +19,7 @@
         <module>capacidad</module>
         <module>tecnologia</module>
         <module>bootcamps</module>
+        <module>api-gateway</module>
 
     </modules>
 

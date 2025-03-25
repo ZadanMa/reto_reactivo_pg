@@ -6,6 +6,7 @@ import com.reto_reactivo.capacidad.application.service.CapacidadService;
 import com.reto_reactivo.capacidad.domain.model.Capacidad;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -34,6 +35,7 @@ public class CapacidadController {
         return capacidadService.agregarTecnologias(id, nuevasTecnologias);
     }
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_TUTOR')")
     public Flux<CapacidadDTO> listarCapacidades(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
