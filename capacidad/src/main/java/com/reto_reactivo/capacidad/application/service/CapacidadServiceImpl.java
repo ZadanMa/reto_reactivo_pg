@@ -94,6 +94,21 @@ public class CapacidadServiceImpl implements CapacidadService {
         return capacidadRepository.findById(id);
     }
 
+    public Mono<CapacidadDTO> obtenerCapacidadDetalle(Long id) {
+        return capacidadRepository.findById(id)
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("Capacidad no encontrada con id: " + id)))
+                .flatMap(capacidad ->
+                        // Para cada ID de tecnología, consultamos el microservicio de tecnologías
+                        Flux.fromIterable(capacidad.getTecnologiaIds())
+                                .flatMap(techId ->
+                                        tecnologiaClient.getTecnologiaById(techId)
+                                                .map(tech -> new TecnologiaDTO(tech.getId(), tech.getNombre()))
+                                )
+                                .collectList()
+                                .map(tecnologias -> new CapacidadDTO(capacidad.getId(), capacidad.getNombre(),capacidad.getDescripcion(), tecnologias))
+                );
+    }
+
     private Comparator<? super Capacidad> getComparator(String sortField, String sortDirection) {
         Comparator<Capacidad> comparator;
         if ("cantidad".equalsIgnoreCase(sortField)) {

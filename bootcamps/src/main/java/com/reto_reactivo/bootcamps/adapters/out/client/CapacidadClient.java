@@ -1,6 +1,6 @@
 package com.reto_reactivo.bootcamps.adapters.out.client;
 
-import com.reto_reactivo.bootcamps.application.dto.CapacidadMinDTO;
+import com.reto_reactivo.bootcamps.application.dto.CapacidadFullDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -15,10 +15,10 @@ public class CapacidadClient {
         this.webClient = webClientBuilder.baseUrl("http://capacidad").build();
     }
 
-    public Mono<CapacidadMinDTO> getCapacidadById(Long id) {
+    public Mono<CapacidadFullDTO> getCapacidadById(Long id) {
         return webClient.get()
                 .uri("/api/capacidades/{id}", id)
                 .retrieve()
-                .bodyToMono(CapacidadMinDTO.class);
+                .bodyToMono(CapacidadFullDTO.class);
     }
 }

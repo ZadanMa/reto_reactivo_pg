@@ -1,5 +1,7 @@
 package com.reto_reactivo.bootcamps.application.service;
 
+import com.reto_reactivo.bootcamps.adapters.out.client.CapacidadClient;
+import com.reto_reactivo.bootcamps.application.dto.BootcampDetailsDTO;
 import com.reto_reactivo.bootcamps.domain.model.Bootcamp;
 import com.reto_reactivo.bootcamps.domain.port.out.BootcampRepository;
 import org.springframework.stereotype.Service;
@@ -10,10 +12,13 @@ import java.util.Comparator;
 @Service
 public class BootcampServiceImpl implements BootcampService {
 
-    private final BootcampRepository bootcampRepository;
 
-    public BootcampServiceImpl(BootcampRepository bootcampRepository) {
+    private final BootcampRepository bootcampRepository;
+    private final CapacidadClient capacidadClient;
+
+    public BootcampServiceImpl(BootcampRepository bootcampRepository, CapacidadClient capacidadClient) {
         this.bootcampRepository = bootcampRepository;
+        this.capacidadClient = capacidadClient;
     }
 
     @Override
@@ -44,6 +49,43 @@ public class BootcampServiceImpl implements BootcampService {
     @Override
     public Flux<Bootcamp> findAll() {
         return bootcampRepository.findAll();
+    }
+
+    @Override
+    public Mono<BootcampDetailsDTO> obtenerBootcampConDetalles(Long id) {
+        return bootcampRepository.findById(id)
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("No se encontró el bootcamp con ID: " + id)))
+                .flatMap(bootcamp ->
+                        Flux.fromIterable(bootcamp.getCapacidadIds())
+                                .flatMap(capacidadId -> capacidadClient.getCapacidadById(capacidadId))
+                                .collectList()
+                                .map(capacidades -> new BootcampDetailsDTO(
+                                        bootcamp.getId(),
+                                        bootcamp.getNombre(),
+                                        bootcamp.getDescripcion(),
+                                        capacidades
+                                ))
+                );
+    }
+
+    @Override
+    public Flux<BootcampDetailsDTO> listarBootcampsConDetalles(int page, int size, String sortField, String sortDirection) {
+        return bootcampRepository.findAll()
+                .sort(getComparator(sortField, sortDirection))
+                .skip((long) page * size)
+                .take(size)
+                .flatMap(bootcamp ->
+                        // Para cada bootcamp, se consultan las capacidades detalladas de forma concurrente.
+                        Flux.fromIterable(bootcamp.getCapacidadIds())
+                                .flatMap(capId -> capacidadClient.getCapacidadById(capId))
+                                .collectList()
+                                .map(capacidades -> new BootcampDetailsDTO(
+                                        bootcamp.getId(),
+                                        bootcamp.getNombre(),
+                                        bootcamp.getDescripcion(),
+                                        capacidades
+                                ))
+                );
     }
 
     private Comparator<Bootcamp> getComparator(String sortField, String sortDirection) {

@@ -1,5 +1,6 @@
 package com.reto_reactivo.bootcamps.application.service;
 
+import com.reto_reactivo.bootcamps.application.dto.BootcampDetailsDTO;
 import com.reto_reactivo.bootcamps.domain.model.Bootcamp;
 import com.reto_reactivo.bootcamps.domain.port.in.RegistrarBootcampUseCase;
 import reactor.core.publisher.Flux;
@@ -18,4 +19,10 @@ public interface BootcampService {
 
     // Método para listar todos los bootcamps sin paginación
     Flux<Bootcamp> findAll();
+
+    // Método para listar bootcamp con detalles de forma individual
+    Mono<BootcampDetailsDTO> obtenerBootcampConDetalles(Long id);
+
+    // Nuevo método: Listar bootcamps con detalle de capacidades y tecnologías
+    Flux<BootcampDetailsDTO> listarBootcampsConDetalles(int page, int size, String sortField, String sortDirection);
 }

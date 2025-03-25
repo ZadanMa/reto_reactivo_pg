@@ -1,4 +1,4 @@
-package com.reto_reactivo.capacidad.config;
+package com.reto_reactivo.bootcamps.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
