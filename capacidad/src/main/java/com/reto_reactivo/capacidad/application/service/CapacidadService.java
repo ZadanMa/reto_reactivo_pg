@@ -17,5 +17,7 @@ public interface CapacidadService extends RegistrarCapacidadUseCase {
     Mono<Capacidad> agregarTecnologias(Long capacidadId, Set<Long> nuevasTecnologias);
 
     Flux<CapacidadDTO> listarCapacidades(int page, int size, String sortField, String sortDirection);
+
+    Mono<Capacidad> findById(Long id);
 }
 

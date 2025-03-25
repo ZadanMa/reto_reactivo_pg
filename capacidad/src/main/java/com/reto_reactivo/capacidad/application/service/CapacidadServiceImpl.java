@@ -89,6 +89,11 @@ public class CapacidadServiceImpl implements CapacidadService {
                 });
     }
 
+    @Override
+    public Mono<Capacidad> findById(Long id) {
+        return capacidadRepository.findById(id);
+    }
+
     private Comparator<? super Capacidad> getComparator(String sortField, String sortDirection) {
         Comparator<Capacidad> comparator;
         if ("cantidad".equalsIgnoreCase(sortField)) {

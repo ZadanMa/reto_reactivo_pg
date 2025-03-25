@@ -41,4 +41,8 @@ public class CapacidadController {
             @RequestParam(defaultValue = "asc") String sortDirection) {
         return capacidadService.listarCapacidades(page, size, sortField, sortDirection);
     }
+    @GetMapping("/{id}")
+    public Mono<Capacidad> findById(@PathVariable Long id) {
+        return capacidadService.findById(id);
+    }
 }
