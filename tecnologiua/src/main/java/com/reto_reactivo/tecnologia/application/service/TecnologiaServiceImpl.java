@@ -4,6 +4,8 @@ package com.reto_reactivo.tecnologia.application.service;
 import com.reto_reactivo.tecnologia.domain.exception.DuplicateTechnologyNameException;
 import com.reto_reactivo.tecnologia.domain.model.Tecnologia;
 import com.reto_reactivo.tecnologia.domain.port.out.TecnologiaRepository;
+import org.springframework.data.domain.Sort;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +27,17 @@ public class TecnologiaServiceImpl implements TecnologiaService {
                     }
                     return tecnologiaRepository.save(tecnologia);
                 });
+    }
+    @Override
+    public Flux<Tecnologia> listarTecnologias(int page, int size, String sortDirection) {
+        // Construir el objeto Sort según la dirección (ascendente o descendente)
+        Sort sort = sortDirection.equalsIgnoreCase("asc") ?
+                Sort.by("nombre").ascending() :
+                Sort.by("nombre").descending();
+
+        // Aplicar paginación: calcular offset y limitar el número de elementos
+        return tecnologiaRepository.findAllTecnologias(sort)
+                .skip((long) page * size)
+                .take(size);
     }
 }

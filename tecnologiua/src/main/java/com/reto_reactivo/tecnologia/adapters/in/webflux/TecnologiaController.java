@@ -6,6 +6,7 @@ import com.reto_reactivo.tecnologia.domain.model.Tecnologia;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -22,5 +23,13 @@ public class TecnologiaController {
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Tecnologia> registrarTecnologia(@Valid @RequestBody Tecnologia tecnologia) {
         return tecnologiaService.registrarTecnologia(tecnologia);
+    }
+    // Nuevo endpoint para listar tecnologías con paginación y ordenación
+    @GetMapping
+    public Flux<Tecnologia> listarTecnologias(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        return tecnologiaService.listarTecnologias(page, size, sortDirection);
     }
 }
