@@ -16,7 +16,17 @@ public class GatewayConfig {
                 .route("capacidad_route", r -> r.path("/api/capacidades/**")
                         .uri("lb://capacidad"))
                 .route("bootcamps_route", r -> r.path("/api/bootcamps/**")
-                        .uri("lb://bootcamps"))
+                        .uri("lb://bootcamp"))
+                // Microservicio de Bootcamp-Eventos (Iteraciones, Entregables, Submissions)
+                .route("iteraciones_route", r -> r.path("/api/iteraciones/**")
+                        .uri("lb://bootcampeventos"))
+                .route("entregables_route", r -> r.path("/api/entregables/**")
+                        .uri("lb://bootcampeventos"))
+                .route("submissions_route", r -> r.path("/api/submissions/**")
+                        .uri("lb://bootcampeventos"))
+                // Ruta opcional para endpoints generales de bootcamp-eventos
+                .route("bootcamp_eventos_route", r -> r.path("/api/bootcamp-eventos/**")
+                        .uri("lb://bootcampeventos"))
                 .build();
     }
 }

@@ -55,10 +55,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authenticationManager(authManager)
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/admin/users").permitAll()
-                        .pathMatchers("/admin").hasRole("TUTOR")
-                        .pathMatchers("/admin/login/hola").hasRole("ADMIN")
-                        .anyExchange().hasRole("ADMIN")
+                        .pathMatchers("/admin/users/{id}").permitAll()
+                        .anyExchange().authenticated()
                 )
                 // Inserta el filtro de headers después de la autenticación
                 .addFilterAfter(authHeadersFilter, SecurityWebFiltersOrder.AUTHENTICATION)

@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: bootcampeventos
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/bootcamp_eventos_db?sslMode=DISABLED
+    username: root
+    password: admin
+  flyway:
+    enabled: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mentesintetica3@gmail.com
+    password: tkea fuma mniu tdal
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:eureka-secret@localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+server:
+  port: 8085
+
+logging:
+  level:
+    com.netflix.discovery: DEBUG
+    org.springframework.cloud.client.loadbalancer: DEBUG
+    reactor:
+      netty:
+        http: DEBUG # O TRACE para más detalles

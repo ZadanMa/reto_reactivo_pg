@@ -2,9 +2,11 @@
 package com.reto_reactivo.tecnologia.adapters.in.webflux;
 
 import com.reto_reactivo.tecnologia.application.service.TecnologiaService;
+import com.reto_reactivo.tecnologia.domain.exception.DuplicateTechnologyNameException;
 import com.reto_reactivo.tecnologia.domain.model.Tecnologia;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -39,6 +41,11 @@ public class TecnologiaController {
     @GetMapping("/{id}")
     public Mono<Tecnologia> findById(@PathVariable Long id) {
         return tecnologiaService.findById(id);
+    }
+    @ExceptionHandler(DuplicateTechnologyNameException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Mono<ResponseEntity<String>> handleDuplicateName(DuplicateTechnologyNameException ex) {
+        return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage()));
     }
     @GetMapping("/admin-only")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

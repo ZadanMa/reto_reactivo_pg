@@ -25,7 +25,7 @@ public class BootcampController {
         return bootcampService.registrarBootcamp(bootcamp);
     }
 
-    @GetMapping("orden")
+    @GetMapping("/orden")
     public Flux<Bootcamp> listarBootcamps(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,

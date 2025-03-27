@@ -12,6 +12,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,16 +30,22 @@ public class CapacidadServiceImpl implements CapacidadService {
 
     @Override
     public Mono<Capacidad> registrarCapacidad(Capacidad capacidad) {
+        // Verifica que la lista de IDs no tenga duplicados
+        if (capacidad.getTecnologiaIds() != null) {
+            Set<Long> uniqueTechIds = new HashSet<>(capacidad.getTecnologiaIds());
+            if (uniqueTechIds.size() != capacidad.getTecnologiaIds().size()) {
+                return Mono.error(new InvalidTecnologiasException("No se permiten tecnologías repetidas"));
+            }
+        }
         // Verifica la cantidad de IDs en la capacidad (la validación básica ya se hace con @Size en la entidad)
         if (capacidad.getTecnologiaIds() == null || capacidad.getTecnologiaIds().size() < 3 || capacidad.getTecnologiaIds().size() > 20) {
             return Mono.error(new InvalidTecnologiasException("La capacidad debe tener entre 3 y 20 tecnologias asociadas"));
         }
 
-        // Verifica que cada ID de tecnología exista en el microservicio de tecnología
         return Flux.fromIterable(capacidad.getTecnologiaIds())
                 .flatMap(techId -> tecnologiaClient.getTecnologiaById(techId)
                         .switchIfEmpty(Mono.error(new InvalidTecnologiasException("La tecnología con ID " + techId + " no existe"))))
-                .collectList() // Si se validan todas las tecnologías, continúa
+                .collectList()
                 .flatMap(valid -> capacidadRepository.save(capacidad));
     }
 
@@ -48,7 +55,7 @@ public class CapacidadServiceImpl implements CapacidadService {
                 .switchIfEmpty(Mono.error(new RuntimeException("Capacidad no encontrada")))
                 .flatMap(capacidad -> {
                     // Combina las tecnologías existentes con las nuevas
-                    Set<Long> tecnologiasActualizadas = capacidad.getTecnologiaIds();
+                    List<Long> tecnologiasActualizadas = capacidad.getTecnologiaIds();
                     tecnologiasActualizadas.addAll(nuevasTecnologias);
 
                     // Valida que el total no exceda 20

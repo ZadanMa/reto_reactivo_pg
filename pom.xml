@@ -15,11 +15,11 @@
 
     <!-- Lista de módulos -->
     <modules>
-        <module>auth-service</module>
         <module>capacidad</module>
         <module>tecnologia</module>
         <module>bootcamps</module>
         <module>api-gateway</module>
+        <module>bootcamp-eventos</module>
 
     </modules>
 
@@ -46,6 +46,7 @@
             </dependency>
 
             <!-- Añade aquí otras dependencias que quieras gestionar centralmente -->
+
         </dependencies>
     </dependencyManagement>
 

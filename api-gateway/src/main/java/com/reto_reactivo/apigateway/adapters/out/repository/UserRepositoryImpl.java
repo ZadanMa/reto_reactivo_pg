@@ -24,6 +24,12 @@ public class UserRepositoryImpl implements UserRepository {
     public Mono<User> save(User user) {
         return reactiveRepository.save(user);
     }
+
+    @Override
+    public Mono<User> findbyid(Long id) {
+        return reactiveRepository.findById(id);
+    }
+
     public Flux<User> findAll() {
         return reactiveRepository.findAll();
     }

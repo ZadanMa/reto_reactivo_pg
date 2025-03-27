@@ -1,0 +1,25 @@
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
+      - org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.oauth2.resource.reactive.ReactiveOAuth2ResourceServerAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration
+  cloud:
+    discovery:
+      enabled: false
+    loadbalancer:
+      ribbon:
+        enabled: false
+logging:
+  level:
+    org:
+      springframework:
+        DEBUG
+    reactor:
+      DEBUG
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    enabled: false

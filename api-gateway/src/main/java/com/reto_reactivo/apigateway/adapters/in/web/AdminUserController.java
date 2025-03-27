@@ -2,7 +2,6 @@ package com.reto_reactivo.apigateway.adapters.in.web;
 
 import com.reto_reactivo.apigateway.application.service.UserService;
 import com.reto_reactivo.apigateway.domain.model.User;
-import jakarta.ws.rs.GET;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -23,13 +22,17 @@ public class AdminUserController {
         User newUser = new User();
         newUser.setUsername(request.getUsername());
         newUser.setPassword(request.getPassword());
+        newUser.setEmail(request.getEmail());
         newUser.setRole(request.getRole());
         return userService.createUser(newUser);
     }
     @GetMapping("/users")
-    @PreAuthorize("hasRole('ADMIN')")
     public Flux<User> findAll() {
         return userService.findAll();
+    }
+    @GetMapping("/users/{id}")
+    public Mono<User> findById(@PathVariable Long id) {
+        return userService.findbyid(id);
     }
 
     @GetMapping("/login/hola")

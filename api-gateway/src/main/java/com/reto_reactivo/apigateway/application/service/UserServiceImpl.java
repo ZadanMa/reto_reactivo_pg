@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Mono<User> findbyid(Long id) {
+        return userRepository.findbyid(id);
+    }
+
+    @Override
     public Flux<User> findAll() {
         return userRepository.findAll();
     }

@@ -7,5 +7,6 @@ import reactor.core.publisher.Mono;
 public interface UserService {
     Mono<User> findByUsername(String username);
     Mono<User> createUser(User user);
+    Mono<User> findbyid(Long id);
     Flux<User> findAll();
 }

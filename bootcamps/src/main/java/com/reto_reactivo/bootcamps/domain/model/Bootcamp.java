@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+
+import java.util.List;
 import java.util.Set;
 
 @Table("bootcamps")
@@ -23,11 +25,11 @@ public class Bootcamp {
 
     @NotEmpty(message = "Debe tener al menos 1 capacidad asociada")
     @Size(min = 1, max = 4, message = "Un bootcamp debe tener entre 1 y 4 capacidades")
-    private Set<Long> capacidadIds;  // Almacena los IDs de las capacidades asociadas
+    private List<Long> capacidadIds;
 
     public Bootcamp() {}
 
-    public Bootcamp(Long id, String nombre, String descripcion, Set<Long> capacidadIds) {
+    public Bootcamp(Long id, String nombre, String descripcion, List<Long> capacidadIds) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -53,10 +55,10 @@ public class Bootcamp {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public Set<Long> getCapacidadIds() {
+    public List<Long> getCapacidadIds() {
         return capacidadIds;
     }
-    public void setCapacidadIds(Set<Long> capacidadIds) {
+    public void setCapacidadIds(List<Long> capacidadIds) {
         this.capacidadIds = capacidadIds;
     }
 }

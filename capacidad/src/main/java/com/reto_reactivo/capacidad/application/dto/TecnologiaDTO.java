@@ -2,6 +2,8 @@ package com.reto_reactivo.capacidad.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TecnologiaDTO {
     private Long id;
@@ -33,6 +35,17 @@ public class TecnologiaDTO {
         this.id = id;
         this.nombre = nombre;
     }
-    // Constructor por defecto (necesario para la deserialización)
     public TecnologiaDTO() {}
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TecnologiaDTO that = (TecnologiaDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(nombre, that.nombre) && Objects.equals(descripcion, that.descripcion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, descripcion);
+    }
 }

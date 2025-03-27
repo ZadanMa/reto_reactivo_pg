@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+
+import java.util.List;
 import java.util.Set;
 
 @Table("capacidades")
@@ -26,12 +28,12 @@ public class Capacidad {
     @NotEmpty(message = "Se debe asociar al menos 3 tecnologias")
     @Size(min = 3, max = 20, message = "La capacidad debe tener entre 3 y 20 tecnologias")
     @Column("tecnologia_ids")
-    private Set<Long> tecnologiaIds;  // IDs de tecnologías asociadas
+    private List<Long> tecnologiaIds;
 
     public Capacidad() {
     }
 
-    public Capacidad(Long id, String nombre, String descripcion, Set<Long> tecnologiaIds) {
+    public Capacidad(Long id, String nombre, String descripcion, List<Long> tecnologiaIds) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -48,6 +50,6 @@ public class Capacidad {
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public Set<Long> getTecnologiaIds() { return tecnologiaIds; }
-    public void setTecnologiaIds(Set<Long> tecnologiaIds) { this.tecnologiaIds = tecnologiaIds; }
+    public List<Long> getTecnologiaIds() { return tecnologiaIds; }
+    public void setTecnologiaIds(List<Long> tecnologiaIds) { this.tecnologiaIds = tecnologiaIds; }
 }

@@ -20,6 +20,9 @@ public class TecnologiaServiceImpl implements TecnologiaService {
 
     @Override
     public Mono<Tecnologia> registrarTecnologia(Tecnologia tecnologia) {
+        if (tecnologia.getDescripcion() == null || tecnologia.getDescripcion().trim().isEmpty()) {
+            return Mono.error(new IllegalArgumentException("La descripción es obligatoria"));
+        }
         return tecnologiaRepository.existsByNombre(tecnologia.getNombre())
                 .flatMap(exists -> {
                     if (exists) {

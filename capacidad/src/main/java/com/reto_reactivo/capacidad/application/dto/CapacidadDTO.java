@@ -1,6 +1,7 @@
 package com.reto_reactivo.capacidad.application.dto;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CapacidadDTO {
     private Long id;
@@ -41,5 +42,17 @@ public class CapacidadDTO {
     }
     public void setTecnologias(List<TecnologiaDTO> tecnologias) {
         this.tecnologias = tecnologias;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        CapacidadDTO that = (CapacidadDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(nombre, that.nombre) && Objects.equals(descripcion, that.descripcion) && Objects.equals(tecnologias, that.tecnologias);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, descripcion, tecnologias);
     }
 }
