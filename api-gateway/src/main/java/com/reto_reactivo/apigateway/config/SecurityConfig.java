@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .authenticationManager(authManager)
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/admin/users/{id}").permitAll()
+                        .pathMatchers("/swagger-ui/**", "/v3/api-docs/**","/webjars/swagger-ui/index.html").permitAll()
                         .anyExchange().authenticated()
                 )
                 // Inserta el filtro de headers después de la autenticación

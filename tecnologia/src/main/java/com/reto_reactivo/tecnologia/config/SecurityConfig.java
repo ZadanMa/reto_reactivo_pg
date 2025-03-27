@@ -17,6 +17,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchanges -> exchanges
+                        .pathMatchers("/swagger-ui/**", "/v3/api-docs/**","/webjars/swagger-ui/index.html").permitAll()
                         // Confiamos en gateway, no exigimos credenciales
                         .anyExchange().permitAll()
                 )

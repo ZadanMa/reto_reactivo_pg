@@ -1,9 +1,8 @@
-package com.reto_reactivo.bootcamps.config;
+package com.reto_reactivo.apigateway.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
-
 import io.swagger.v3.oas.models.info.License;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +14,8 @@ public class SwaggerConfig {
     public OpenAPI tecnologiaOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API de Tecnología")
-                        .description("Documentación de la API para gestionar tecnologías. Incluye endpoints para registrar, listar y buscar tecnologías.")
+                        .title("API de ApiGateway")
+                        .description("Documentación de la API para gestionar tecnologías, capacidad y bootmcaps ")
                         .version("1.0")
                         .contact(new Contact()
                                 .name("Adan Moreto")
